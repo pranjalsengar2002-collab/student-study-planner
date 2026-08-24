@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Study Planner</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 800px;
+            margin: 25px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #aaa;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            padding: 10px;
+            margin-top: 8px;
+            background: #f2f2f2;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .progress {
+            width: 100%;
+            height: 25px;
+            background: #ddd;
+        }
+
+        .progress-bar {
+            height: 25px;
+            width: 0%;
+            background: #27ae60;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Student Study Planner</h1>
+        <p>Plan • Study • Track • Improve</p>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>Add Study Task</h2>
+
+            <input type="text" id="taskInput"
+                   placeholder="Enter your study task">
+
+            <button onclick="addTask()">Add Task</button>
+
+            <ul id="taskList"></ul>
+        </div>
+
+        <div class="card">
+            <h2>Study Progress</h2>
+
+            <p id="progressText">0% Completed</p>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        var totalTasks = 0;
+        var completedTasks = 0;
+
+        function addTask() {
+
+            var input = document.getElementById("taskInput");
+            var task = input.value;
+
+            if (task == "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            var li = document.createElement("li");
+
+            li.innerHTML =
+                task +
+                ' <button onclick="completeTask(this)">Done</button>' +
+                ' <button onclick="deleteTask(this)">Delete</button>';
+
+            document.getElementById("taskList").appendChild(li);
+
+            totalTasks++;
+
+            input.value = "";
+
+            updateProgress();
+        }
+
+        function completeTask(button) {
+
+            var li = button.parentNode;
+
+            if (!li.className) {
+                li.className = "done";
+                completedTasks++;
+                button.disabled = true;
+            }
+
+            updateProgress();
+        }
+
+        function deleteTask(button) {
+
+            var li = button.parentNode;
+
+            if (li.className == "done") {
+                completedTasks--;
+            }
+
+            totalTasks--;
+
+            li.parentNode.removeChild(li);
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+
+            var percentage = 0;
+
+            if (totalTasks > 0) {
+                percentage =
+                    Math.round((completedTasks / totalTasks) * 100);
+            }
+
+            document.getElementById("progressText").innerHTML =
+                percentage + "% Completed";
+
+            document.getElementById("progressBar").style.width =
+                percentage + "%";
+        }
+
+    </script>
+
+</body>
+</html>
