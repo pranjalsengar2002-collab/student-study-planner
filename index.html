@@ -1,195 +1,1019 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Study Planner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyFlow - Student Study Planner</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #eef2f7;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
         }
+
+        /* HEADER */
 
         .header {
-            background: #2c3e50;
+            background: #111827;
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 18px 30px;
         }
 
+        .header-content {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .date {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* MAIN */
+
         .container {
-            width: 800px;
-            margin: 25px auto;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .welcome p {
+            margin: 0;
+            color: #dbeafe;
+        }
+
+        /* STAT CARDS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-icon {
+            font-size: 25px;
+        }
+
+        .stat h3 {
+            margin: 12px 0 5px;
+            font-size: 25px;
+        }
+
+        .stat p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
         }
 
         .card {
             background: white;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid #e5e7eb;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
         }
 
-        h2 {
-            color: #2c3e50;
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
         }
 
-        input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #aaa;
+        .card-title h2 {
+            margin: 0;
+            font-size: 19px;
         }
 
-        button {
-            padding: 10px 15px;
-            background: #3498db;
+        /* TASK INPUT */
+
+        .task-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .task-input input {
+            flex: 1;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .task-input input:focus {
+            border-color: #2563eb;
+        }
+
+        .add-btn {
+            background: #2563eb;
             color: white;
             border: none;
+            border-radius: 10px;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* TASKS */
+
+        .task {
+            display: flex;
+            align-items: center;
+            padding: 13px;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #eef2f7;
+        }
+
+        .task-check {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #2980b9;
+        .task-name {
+            flex: 1;
+            font-size: 14px;
         }
 
-        ul {
-            padding: 0;
-        }
-
-        li {
-            list-style: none;
-            padding: 10px;
-            margin-top: 8px;
-            background: #f2f2f2;
-        }
-
-        .done {
+        .task.completed .task-name {
             text-decoration: line-through;
-            color: gray;
+            color: #9ca3af;
         }
 
-        .progress {
-            width: 100%;
-            height: 25px;
-            background: #ddd;
+        .delete-btn {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* PROGRESS */
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bg {
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
         }
 
         .progress-bar {
-            height: 25px;
+            height: 100%;
             width: 0%;
-            background: #27ae60;
+            background: linear-gradient(90deg, #2563eb, #4f46e5);
+            transition: width 0.4s;
+        }
+
+        /* SUBJECTS */
+
+        .subjects {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .subject {
+            padding: 15px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+        }
+
+        .subject strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .subject span {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* TIMER */
+
+        .timer {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .timer-display {
+            font-size: 38px;
+            font-weight: bold;
+            color: #111827;
+            margin: 15px 0;
+        }
+
+        .timer button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 3px;
+            font-weight: bold;
+        }
+
+        .start {
+            background: #2563eb;
+            color: white;
+        }
+
+        .reset {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        /* TIP */
+
+        .tip {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media screen and (max-width: 800px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+
+            .header-content {
+                display: block;
+            }
+
+            .date {
+                margin-top: 8px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .task-input {
+                display: block;
+            }
+
+            .task-input input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .add-btn {
+                padding: 12px 20px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- HEADER -->
+
     <div class="header">
-        <h1>Student Study Planner</h1>
-        <p>Plan • Study • Track • Improve</p>
+        <div class="header-content">
+
+            <div class="logo">
+                Study<span>Flow</span>
+            </div>
+
+            <div class="date" id="currentDate"></div>
+
+        </div>
     </div>
+
+
+    <!-- MAIN -->
 
     <div class="container">
 
-        <div class="card">
-            <h2>Add Study Task</h2>
+        <!-- WELCOME -->
 
-            <input type="text" id="taskInput"
-                   placeholder="Enter your study task">
+        <div class="welcome">
 
-            <button onclick="addTask()">Add Task</button>
+            <h1>Good day, Student 👋</h1>
 
-            <ul id="taskList"></ul>
+            <p>
+                Stay focused, complete your tasks and make progress every day.
+            </p>
+
         </div>
 
-        <div class="card">
-            <h2>Study Progress</h2>
 
-            <p id="progressText">0% Completed</p>
+        <!-- STATISTICS -->
 
-            <div class="progress">
-                <div class="progress-bar" id="progressBar"></div>
+        <div class="stats">
+
+            <div class="stat">
+                <div class="stat-icon">📚</div>
+                <h3 id="totalTasks">0</h3>
+                <p>Total Tasks</p>
             </div>
+
+            <div class="stat">
+                <div class="stat-icon">✅</div>
+                <h3 id="completedTasks">0</h3>
+                <p>Completed</p>
+            </div>
+
+            <div class="stat">
+                <div class="stat-icon">📈</div>
+                <h3 id="percentage">0%</h3>
+                <p>Progress</p>
+            </div>
+
+            <div class="stat">
+                <div class="stat-icon">🔥</div>
+                <h3 id="streak">1</h3>
+                <p>Day Streak</p>
+            </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="grid">
+
+            <!-- LEFT COLUMN -->
+
+            <div>
+
+                <!-- TASK CARD -->
+
+                <div class="card">
+
+                    <div class="card-title">
+
+                        <h2>Today's Tasks</h2>
+
+                    </div>
+
+
+                    <div class="task-input">
+
+                        <input
+                            type="text"
+                            id="taskInput"
+                            placeholder="What do you want to study today?"
+                        >
+
+                        <button class="add-btn" onclick="addTask()">
+                            + Add Task
+                        </button>
+
+                    </div>
+
+
+                    <div id="taskList"></div>
+
+                </div>
+
+
+                <!-- PROGRESS -->
+
+                <div class="card">
+
+                    <div class="card-title">
+                        <h2>Today's Progress</h2>
+                    </div>
+
+                    <div class="progress-info">
+
+                        <span>Overall Progress</span>
+
+                        <strong id="progressNumber">
+                            0%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress-bg">
+
+                        <div
+                            class="progress-bar"
+                            id="progressBar">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div>
+
+                <!-- TIMER -->
+
+                <div class="card">
+
+                    <div class="card-title">
+                        <h2>Study Timer</h2>
+                    </div>
+
+                    <div class="timer">
+
+                        <div
+                            class="timer-display"
+                            id="timer">
+                            25:00
+                        </div>
+
+                        <button
+                            class="start"
+                            onclick="startTimer()"
+                            id="startButton">
+                            Start
+                        </button>
+
+                        <button
+                            class="reset"
+                            onclick="resetTimer()">
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBJECTS -->
+
+                <div class="card">
+
+                    <div class="card-title">
+                        <h2>Subjects</h2>
+                    </div>
+
+                    <div class="subjects">
+
+                        <div class="subject">
+                            <strong>📐 Mathematics</strong>
+                            <span>Practice</span>
+                        </div>
+
+                        <div class="subject">
+                            <strong>📖 English</strong>
+                            <span>Grammar</span>
+                        </div>
+
+                        <div class="subject">
+                            <strong>🌎 GK</strong>
+                            <span>Revision</span>
+                        </div>
+
+                        <div class="subject">
+                            <strong>💻 Computer</strong>
+                            <span>Learning</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STUDY TIP -->
+
+                <div class="card">
+
+                    <div class="card-title">
+                        <h2>💡 Study Tip</h2>
+                    </div>
+
+                    <div class="tip">
+
+                        Study for 25 minutes without distractions,
+                        then take a short break.
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        StudyFlow • Your Personal Study Planner
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
     <script>
 
-        var totalTasks = 0;
-        var completedTasks = 0;
+        var tasks = [];
+
+        var timerSeconds = 25 * 60;
+
+        var timerRunning = false;
+
+        var timerInterval;
+
+
+        /* DATE */
+
+        function showDate() {
+
+            var date = new Date();
+
+            var days = [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ];
+
+            var months = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ];
+
+            var text =
+                days[date.getDay()] +
+                ", " +
+                date.getDate() +
+                " " +
+                months[date.getMonth()] +
+                " " +
+                date.getFullYear();
+
+            document.getElementById("currentDate").innerHTML = text;
+        }
+
+
+        /* ADD TASK */
 
         function addTask() {
 
-            var input = document.getElementById("taskInput");
-            var task = input.value;
+            var input =
+                document.getElementById("taskInput");
 
-            if (task == "") {
-                alert("Please enter a task.");
+            var text = input.value;
+
+            if (text == "") {
+
+                alert("Please enter a study task.");
+
                 return;
             }
 
-            var li = document.createElement("li");
-
-            li.innerHTML =
-                task +
-                ' <button onclick="completeTask(this)">Done</button>' +
-                ' <button onclick="deleteTask(this)">Delete</button>';
-
-            document.getElementById("taskList").appendChild(li);
-
-            totalTasks++;
+            tasks.push({
+                name: text,
+                completed: false
+            });
 
             input.value = "";
 
-            updateProgress();
+            saveTasks();
+
+            displayTasks();
+
         }
 
-        function completeTask(button) {
 
-            var li = button.parentNode;
+        /* DISPLAY TASKS */
 
-            if (!li.className) {
-                li.className = "done";
-                completedTasks++;
-                button.disabled = true;
+        function displayTasks() {
+
+            var list =
+                document.getElementById("taskList");
+
+            list.innerHTML = "";
+
+            for (var i = 0; i < tasks.length; i++) {
+
+                var task = tasks[i];
+
+                var div =
+                    document.createElement("div");
+
+                div.className = "task";
+
+                if (task.completed) {
+                    div.className += " completed";
+                }
+
+
+                var checkbox =
+                    document.createElement("input");
+
+                checkbox.type = "checkbox";
+
+                checkbox.className = "task-check";
+
+                checkbox.checked = task.completed;
+
+                checkbox.setAttribute(
+                    "data-index",
+                    i
+                );
+
+                checkbox.onclick = function() {
+
+                    var index =
+                        parseInt(
+                            this.getAttribute(
+                                "data-index"
+                            )
+                        );
+
+                    tasks[index].completed =
+                        this.checked;
+
+                    saveTasks();
+
+                    displayTasks();
+
+                };
+
+
+                var name =
+                    document.createElement("span");
+
+                name.className = "task-name";
+
+                name.innerHTML = task.name;
+
+
+                var deleteButton =
+                    document.createElement("button");
+
+                deleteButton.className =
+                    "delete-btn";
+
+                deleteButton.innerHTML = "✕";
+
+                deleteButton.setAttribute(
+                    "data-index",
+                    i
+                );
+
+                deleteButton.onclick = function() {
+
+                    var index =
+                        parseInt(
+                            this.getAttribute(
+                                "data-index"
+                            )
+                        );
+
+                    tasks.splice(index, 1);
+
+                    saveTasks();
+
+                    displayTasks();
+
+                };
+
+
+                div.appendChild(checkbox);
+
+                div.appendChild(name);
+
+                div.appendChild(deleteButton);
+
+                list.appendChild(div);
             }
 
             updateProgress();
+
         }
 
-        function deleteTask(button) {
 
-            var li = button.parentNode;
-
-            if (li.className == "done") {
-                completedTasks--;
-            }
-
-            totalTasks--;
-
-            li.parentNode.removeChild(li);
-
-            updateProgress();
-        }
+        /* PROGRESS */
 
         function updateProgress() {
 
-            var percentage = 0;
+            var total = tasks.length;
 
-            if (totalTasks > 0) {
-                percentage =
-                    Math.round((completedTasks / totalTasks) * 100);
+            var completed = 0;
+
+            for (var i = 0; i < tasks.length; i++) {
+
+                if (tasks[i].completed) {
+                    completed++;
+                }
+
             }
 
-            document.getElementById("progressText").innerHTML =
-                percentage + "% Completed";
 
-            document.getElementById("progressBar").style.width =
+            var percentage = 0;
+
+            if (total > 0) {
+
+                percentage =
+                    Math.round(
+                        (completed / total) * 100
+                    );
+
+            }
+
+
+            document.getElementById(
+                "totalTasks"
+            ).innerHTML = total;
+
+
+            document.getElementById(
+                "completedTasks"
+            ).innerHTML = completed;
+
+
+            document.getElementById(
+                "percentage"
+            ).innerHTML = percentage + "%";
+
+
+            document.getElementById(
+                "progressNumber"
+            ).innerHTML = percentage + "%";
+
+
+            document.getElementById(
+                "progressBar"
+            ).style.width =
                 percentage + "%";
+
         }
+
+
+        /* SAVE TASKS */
+
+        function saveTasks() {
+
+            try {
+
+                localStorage.setItem(
+                    "studyFlowTasks",
+                    JSON.stringify(tasks)
+                );
+
+            } catch (e) {
+
+            }
+
+        }
+
+
+        /* LOAD TASKS */
+
+        function loadTasks() {
+
+            try {
+
+                var saved =
+                    localStorage.getItem(
+                        "studyFlowTasks"
+                    );
+
+                if (saved) {
+
+                    tasks =
+                        JSON.parse(saved);
+
+                }
+
+            } catch (e) {
+
+                tasks = [];
+
+            }
+
+            displayTasks();
+
+        }
+
+
+        /* TIMER */
+
+        function updateTimerDisplay() {
+
+            var minutes =
+                Math.floor(timerSeconds / 60);
+
+            var seconds =
+                timerSeconds % 60;
+
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+
+            document.getElementById(
+                "timer"
+            ).innerHTML =
+                minutes + ":" + seconds;
+
+        }
+
+
+        function startTimer() {
+
+            if (timerRunning) {
+
+                clearInterval(timerInterval);
+
+                timerRunning = false;
+
+                document.getElementById(
+                    "startButton"
+                ).innerHTML = "Start";
+
+                return;
+
+            }
+
+
+            timerRunning = true;
+
+            document.getElementById(
+                "startButton"
+            ).innerHTML = "Pause";
+
+
+            timerInterval =
+                setInterval(function() {
+
+                    if (timerSeconds > 0) {
+
+                        timerSeconds--;
+
+                        updateTimerDisplay();
+
+                    } else {
+
+                        clearInterval(
+                            timerInterval
+                        );
+
+                        timerRunning = false;
+
+                        document.getElementById(
+                            "startButton"
+                        ).innerHTML = "Start";
+
+                        alert(
+                            "Great work! Study session completed."
+                        );
+
+                    }
+
+                }, 1000);
+
+        }
+
+
+        function resetTimer() {
+
+            clearInterval(timerInterval);
+
+            timerSeconds = 25 * 60;
+
+            timerRunning = false;
+
+            document.getElementById(
+                "startButton"
+            ).innerHTML = "Start";
+
+            updateTimerDisplay();
+
+        }
+
+
+        /* ENTER KEY */
+
+        document.getElementById(
+            "taskInput"
+        ).onkeypress = function(event) {
+
+            if (event.keyCode == 13) {
+
+                addTask();
+
+            }
+
+        };
+
+
+        /* START */
+
+        showDate();
+
+        loadTasks();
+
+        updateTimerDisplay();
 
     </script>
 
 </body>
-</html>
+</html>      
